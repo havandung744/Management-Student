@@ -55,8 +55,6 @@ namespace baitaptonghop
                 MessageBox.Show("Username or password is incorrect!", "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-
-
             sqlCnn.Close();
         }
 

@@ -30,7 +30,8 @@ namespace baitaptonghop
             }
             else
             {
-                sqlCmd.CommandText = "select * from dstudent order by id desc";
+                sqlCmd.CommandText = "select * from dstudent order by mark desc";
+                //sqlCmd.CommandText = "select * from dstudent order by id desc";
             }
             SqlDataReader dataReader = sqlCmd.ExecuteReader();
             lvwStudent.Items.Clear();
@@ -39,17 +40,12 @@ namespace baitaptonghop
                 ListViewItem listItem = lvwStudent.Items.Add(dataReader.GetInt32(0).ToString()); //id
                 listItem.SubItems.Add(dataReader.GetString(1));//fullname
                 listItem.SubItems.Add(dataReader.GetDouble(2).ToString()); //mark               
+                listItem.SubItems.Add(dataReader.GetString(3)); //sex               
 
-                //sex
-                if (dataReader.GetInt32(3) == 0)
-                    listItem.SubItems.Add("Nam");
-                else if (dataReader.GetInt32(3) == 1)
-                    listItem.SubItems.Add("Nữ");
-                else
-                    listItem.SubItems.Add("khác");
-                listItem.SubItems.Add(dataReader.GetString(4)); //note
+           listItem.SubItems.Add(dataReader.GetString(4)); //note
             }
             sqlCnn.Close();
+
             sqlCnn.Open();
             sqlCmd.CommandText = "select count(id) from dstudent";
             dataReader = sqlCmd.ExecuteReader();
@@ -155,38 +151,37 @@ namespace baitaptonghop
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            int sex = 0;
+            string sex = "Male";
             if (radMale.Checked)
-                sex = 0;
+                sex = "Male";
             else if (radFemale.Checked)
-                sex = 1;
+                sex = "Female";
             else
-                sex = 2;
+                sex = "Other";
 
             if (txtId.Text.Trim() == "")
             {
                 if (txtFullName.Text.Trim() == "")
                 {
                     MessageBox.Show("fullname is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else if (txtMark.Text.Trim() == "")
                 {
                     MessageBox.Show("Mark is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else if (radMale.Checked == false && radFemale.Checked == false && radOther.Checked == false)
                 {
                     MessageBox.Show("sex is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 else
                 {
                     sqlCnn.Open();
                     sqlCmd.CommandText = "insert into dstudent (fullname, mark, gender, note) values" +
-                        " ( '" + txtFullName.Text.Trim() + "','" + txtMark.Text.Trim() + "','" + sex + "','" + txtNote.Text.Trim() + "')";
+                        " ( N'" + txtFullName.Text.Trim() + "','" + txtMark.Text.Trim() + "','" + sex + "',N'" + txtNote.Text.Trim() + "')";
                     sqlCnn.Close();
 
                 }
@@ -196,22 +191,20 @@ namespace baitaptonghop
                 if (txtFullName.Text.Trim() == "")
                 {
                     MessageBox.Show("fullname is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else if (txtMark.Text.Trim() == "")
                 {
                     MessageBox.Show("Mark is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else
                 {
                     sqlCnn.Open();
-                    sqlCmd.CommandText = "update dstudent set fullname='" + txtFullName.Text + "'," +
+                    sqlCmd.CommandText = "update dstudent set fullname=N'" + txtFullName.Text + "'," +
                             "mark='" + txtMark.Text.Trim() + "'," +
                             "gender='" + sex + "'," +
-                            "note='" + txtNote.Text.Trim() + "'" +
+                            "note=N'" + txtNote.Text.Trim() + "'" +
                             "where id='" + txtId.Text.Trim() + "'";
                     sqlCnn.Close();
                 }
@@ -250,9 +243,9 @@ namespace baitaptonghop
                     txtFullName.Text = dataReader.GetString(1);
                     txtMark.Text = dataReader.GetDouble(2).ToString();
                     txtNote.Text = dataReader.GetString(4);
-                    if (dataReader.GetInt32(3) == 0)
+                    if (dataReader.GetString(3).Trim() == "Male")
                         radMale.Checked = true;
-                    else if (dataReader.GetInt32(3) == 1)
+                    else if (dataReader.GetString(3).Trim() == "Female")
                         radFemale.Checked = true;
                     else
                         radOther.Checked = true;
@@ -304,21 +297,23 @@ namespace baitaptonghop
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            sqlCnn.Open();
             if (txtId.Text.Trim() == "")
             {
-                MessageBox.Show("input id, please!");
-                sqlCnn.Close();
+                MessageBox.Show("input id, please!","Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else
             {
+                sqlCnn.Open();
                 sqlCmd.CommandText = "delete from dstudent where id='" + txtId.Text.Trim() + "'";
+                sqlCnn.Close();
             }
             DialogResult dialog = MessageBox.Show("are you delete ?", "delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialog == DialogResult.Yes)
             {
+                sqlCnn.Open();
                 int i = sqlCmd.ExecuteNonQuery();
+                sqlCnn.Close();
                 if (i == 1)
                 {
                     MessageBox.Show("Delete successfully!", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -328,7 +323,6 @@ namespace baitaptonghop
                     MessageBox.Show("Delete unsuccessfully!", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            sqlCnn.Close();
             getAllStudentList();
         }
 

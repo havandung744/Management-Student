@@ -42,8 +42,10 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusForm = new System.Windows.Forms.ToolStripStatusLabel();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -71,17 +73,16 @@
             // mnuFileLogin
             // 
             this.mnuFileLogin.Name = "mnuFileLogin";
-            this.mnuFileLogin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.mnuFileLogin.Size = new System.Drawing.Size(190, 26);
+            this.mnuFileLogin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.mnuFileLogin.Size = new System.Drawing.Size(224, 26);
             this.mnuFileLogin.Text = "Login";
             this.mnuFileLogin.Click += new System.EventHandler(this.mnuFileLogin_Click);
-            this.mnuFileLogin.OwnerChanged += new System.EventHandler(this.mnuFileLogin_OwnerChanged);
             // 
             // mnuFileLogout
             // 
             this.mnuFileLogout.Name = "mnuFileLogout";
             this.mnuFileLogout.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.mnuFileLogout.Size = new System.Drawing.Size(190, 26);
+            this.mnuFileLogout.Size = new System.Drawing.Size(224, 26);
             this.mnuFileLogout.Text = "Logout";
             this.mnuFileLogout.Visible = false;
             this.mnuFileLogout.Click += new System.EventHandler(this.mnuFileLogout_Click);
@@ -90,7 +91,7 @@
             // 
             this.mnuFileExit.Name = "mnuFileExit";
             this.mnuFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuFileExit.Size = new System.Drawing.Size(190, 26);
+            this.mnuFileExit.Size = new System.Drawing.Size(224, 26);
             this.mnuFileExit.Text = "Exit";
             this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
             // 
@@ -140,17 +141,17 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 18);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 16);
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 18);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 16);
             // 
             // statusForm
             // 
             this.statusForm.Name = "statusForm";
-            this.statusForm.Size = new System.Drawing.Size(0, 18);
+            this.statusForm.Size = new System.Drawing.Size(0, 16);
             // 
             // mainForm
             // 
@@ -164,11 +165,11 @@
             this.Name = "mainForm";
             this.Text = "Management System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.mainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,6 +190,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel statusForm;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 

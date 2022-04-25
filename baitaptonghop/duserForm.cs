@@ -15,7 +15,7 @@ namespace baitaptonghop
     {
         public duserForm()
         {
-            InitializeComponent();
+            InitializeComponent();  
         }
 
         private void getAllUserList(string keyword = "", string val = "")
@@ -55,7 +55,7 @@ namespace baitaptonghop
 
                 if (dataReader.Read() == true)
                 {
-                    MessageBox.Show("username is ton tai!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     sqlCnn.Close();
                     return;
                 }
@@ -79,41 +79,40 @@ namespace baitaptonghop
                 }
                 else
                 {
-                    sqlCmd.CommandText = "insert into duser (fullname, username, password, birthdate, note) values ('" + txtFullName.Text.Trim() + "'," +
-                    "'" + txtUser.Text.Trim() + "','" + txtPassword.Text.Trim() + "','" + txtDatebirth.Text.Trim() + "','" + txtNote.Text.Trim() + "')";
+                    sqlCmd.CommandText = "insert into duser (fullname, username, password, birthdate, note) " +
+                        "values (N'" + txtFullName.Text.Trim() + "'," +
+                        "'" + txtUser.Text.Trim() + "','" + txtPassword.Text.Trim() + "'," +
+                        "'" + txtDatebirth.Text.Trim() + "',N'" + txtNote.Text.Trim() + "')";
                     //dataReader.Close();
                     sqlCnn.Close();
                 }
             }
             else
             {
-                sqlCnn.Open();
                 if (txtFullName.Text.Trim() == "")
                 {
                     MessageBox.Show("fullname is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else if (txtUser.Text.Trim() == "")
                 {
 
                     MessageBox.Show("username is not null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else if (txtPassword.Text.Trim() == "")
                 {
                     MessageBox.Show("passsword is not null!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    sqlCnn.Close();
                     return;
                 }
                 else
                 {
-                    sqlCmd.CommandText = "update duser set fullname='" + txtFullName.Text + "'," +
+                    sqlCnn.Open();
+                    sqlCmd.CommandText = "update duser set fullname=N'" + txtFullName.Text + "'," +
                         "username='" + txtUser.Text.Trim() + "'," +
                         "password='" + txtPassword.Text.Trim() + "'," +
                         "birthdate='" + txtDatebirth.Text.Trim() + "'," +
-                        "note='" + txtNote.Text.Trim() + "'" +
+                        "note=N'" + txtNote.Text.Trim() + "'" +
                         "where id='" + txtId.Text.Trim() + "'";
                     sqlCnn.Close();
                 }
@@ -203,21 +202,23 @@ namespace baitaptonghop
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            sqlCnn.Open();
             if (txtId.Text.Trim() == "")
             {
                 MessageBox.Show("input id, please!");
-                sqlCnn.Close();
                 return;
             }
             else
             {
+                sqlCnn.Open();
                 sqlCmd.CommandText = "delete from duser where id='" + txtId.Text.Trim() + "'";
+                sqlCnn.Close();
             }
             DialogResult dialog = MessageBox.Show("are you delete ?", "delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialog == DialogResult.Yes)
             {
+                sqlCnn.Open();
                 int i = sqlCmd.ExecuteNonQuery();
+                sqlCnn.Close();
                 if (i == 1)
                 {
                     MessageBox.Show("Delete successfully!", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -227,7 +228,6 @@ namespace baitaptonghop
                     MessageBox.Show("Delete unsuccessfully!", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            sqlCnn.Close();
             getAllUserList();
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
@@ -57,6 +58,11 @@
             this.sqlCnn = new System.Data.SqlClient.SqlConnection();
             this.lab_DateBirth = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -226,12 +232,12 @@
             // clnUserName
             // 
             this.clnUserName.Text = "username";
-            this.clnUserName.Width = 106;
+            this.clnUserName.Width = 92;
             // 
             // clnBirthDate
             // 
             this.clnBirthDate.Text = "birthdate";
-            this.clnBirthDate.Width = 77;
+            this.clnBirthDate.Width = 90;
             // 
             // label8
             // 
@@ -260,7 +266,6 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(301, 22);
             this.txtSearch.TabIndex = 19;
-         
             // 
             // btnSearch
             // 
@@ -336,6 +341,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User Management";
             this.Load += new System.EventHandler(this.duserForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,5 +379,8 @@
         private System.Data.SqlClient.SqlConnection sqlCnn;
         private System.Windows.Forms.Label lab_DateBirth;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.BindingSource bindingSource2;
     }
 }
